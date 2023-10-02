@@ -1,62 +1,62 @@
-# Spring Boot React OAuth2 Login 
+# Spring Boot React OAuth2 Login
 
-<img src="preview/preview.gif" alt="Google Oauth Login">
+![Google OAuth Login Preview](preview/preview.gif)
 
-## Prerequisite
+This project demonstrates OAuth2 login functionality using Google authentication in a Spring Boot backend and React frontend. Users can log in via Google OAuth and access protected resources.
 
-You have to make a Google oauth credential first. To do that go to [Google API console](https://console.developers.google.com/projectselector/apis/credentials?pli=1) 
+## Prerequisites
 
-Please make sure that these are added in **Authorized javascript origins** and **Authorized redirect URIs** in the OAuth2 provider.  
+Before you begin, make sure to set up a Google OAuth credential by following these steps:
 
-![Origin and Redirect URIs](Origin and Redirect URIs.png)
+1. Go to the [Google API Console](https://console.developers.google.com/projectselector/apis/credentials?pli=1).
+2. Add your **Authorized JavaScript Origins** and **Authorized Redirect URIs**. Ensure that `email` and `profile` scopes are added in your Google project's OAuth2 consent screen.
 
-Also, scope `email` and `profile` should be added in your Google project's OAuth2 consent screen.
+## Setting Up the Backend Server (server)
 
+1. **Create MySQL Database:**
 
-## Setting up the Backend Server (server)
+   ```sql
+   mysql> create database spring_react_oauth
+   ```
 
-+ **Create MySQL database**
+2. **Configure Database and OAuth2 Settings:**
 
-  ```bash
-  mysql> create database spring_react_oauth
-  ```
+   ```properties
+   # server/src/main/resources/application.properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/spring_react_oauth?useSSL=false
+   spring.datasource.username=<YOUR_DB_USERNAME>
+   spring.datasource.password=<YOUR_DB_PASSWORD>
 
-+ **Configure database username and password**
+   # server/src/main/resources/application.yml
+   app:
+     # Signing key for HS512 algorithm
+     # Generate keys at http://www.allkeysgenerator.com/
+     jwtSecret: v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-JaNdRfUjXn2r5u8x/A?D(G+KbPeShVkYp
+     googleClientId: <GOOGLE_CLIENT_ID>
+   ```
 
-  ```properties
-  # server/src/main/resources/application.properties
-  spring.datasource.url=jdbc:mysql://localhost:3306/spring_react_oauth?useSSL=false
-  spring.datasource.username=<YOUR_DB_USERNAME>
-  spring.datasource.password=<YOUR_DB_PASSWORD>
-  ```
+3. **Run the Backend Server:**
 
-+ **Specify JWT Secret and OAuth2 Provider ClientId**
+   ```bash
+   mvn spring-boot:run
+   ```
 
-  ```yml
-  # server/src/main/resources/application.yml
-  app:
-  # Signing key for HS512 algorithm
-  # In http://www.allkeysgenerator.com/ you can generate all kinds of keys
-  jwtSecret: v9y$B&E)H@MbQeThWmZq4t7w!z%C*F-JaNdRfUjXn2r5u8x/A?D(G+KbPeShVkYp
-  googleClientId: <GOOGLE_CLIENT_ID>
-  ```
+## Setting Up the Frontend Server (client)
 
-+ **Run server**
+1. Edit the value of `VITE_APP_GOOGLE_CLIENT_ID` in `react-oauth/.env` to your Google Client ID.
 
-  ```bash
-  mvn spring-boot:run
-  ```
+   ```js
+   VITE_APP_API_URL="http://localhost:8080"
+   VITE_APP_GOOGLE_CLIENT_ID=<GOOGLE_CLIENT_ID>
+   ```
 
-## Setting up the Frontend Server (client)
+2. **Install Dependencies and Start Frontend:**
 
-Edit the value of `VITE_APP_GOOGLE_CLIENT_ID` in `react-oauth/.env` to your google client id.
+   ```bash
+   cd client
+   npm install && npm run dev
+   ```
 
-```js
-VITE_APP_API_URL="http://localhost:8080"
-VITE_APP_GOOGLE_CLIENT_ID=<GOOGLE_CLIENT_ID>
-```
+This project combines Spring Boot's robust backend with React's interactive frontend, allowing users to experience seamless OAuth2 login with Google. For detailed instructions and troubleshooting, refer to the respective documentation in the `server` and `client` directories.
 
-```bash
-cd client
-npm install && npm run dev
-```
+Feel free to customize and extend this project based on your requirements! If you have any questions or need further assistance, please don't hesitate to ask.
