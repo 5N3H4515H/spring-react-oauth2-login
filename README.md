@@ -11,6 +11,8 @@ Before you begin, make sure to set up a Google OAuth credential by following the
 1. Go to the [Google API Console](https://console.developers.google.com/projectselector/apis/credentials?pli=1).
 2. Add your **Authorized JavaScript Origins** and **Authorized Redirect URIs**. Ensure that `email` and `profile` scopes are added in your Google project's OAuth2 consent screen.
 
+![Origin and Redirect URIs](Origin_and_Redirect_URIs.PNG)
+
 ## Setting Up the Backend Server (server)
 
 1. **Create MySQL Database:**
